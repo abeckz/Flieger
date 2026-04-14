@@ -256,7 +256,9 @@
             for (let i = particles.length - 1; i >= 0; i--) {
                 const p = particles[i]; const d = p.userData;
                 p.position.x += d.vx; p.position.y += d.vy; p.position.z += d.vz;
-                d.vz *= 0.98; d.vy += 0.005; d.vx *= 0.99; // Physik
+                // Reibung & Fahrtwind-Effekt:
+                d.vx *= 0.96; d.vy *= 0.96; 
+                d.vz *= 0.92; // Partikel verlieren schnell an Vorwärts-Geschwindigkeit und driften so nach "hinten"
                 d.life -= 0.006; // Rauch hält jetzt deutlich länger an
                 p.scale.setScalar(d.life * 2);
                 if(d.life <= 0) { scene.remove(p); particles.splice(i, 1); }
